@@ -1,0 +1,27 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install OpenCASCADE / Netgen / NGSolve C++ runtime dependencies and non-root worker user
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgl1 \
+    libglu1-mesa \
+    libxrender1 \
+    libxcursor1 \
+    libxft2 \
+    libxinerama1 \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd -m -u 10001 pdeworker
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+RUN mkdir -p /app/data/artifacts && chown -R pdeworker:pdeworker /app
+
+USER pdeworker
+
+STOPSIGNAL SIGTERM
+
+CMD ["python", "-m", "app.jobs.worker"]

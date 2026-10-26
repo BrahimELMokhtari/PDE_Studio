@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0.0",
+  "metadata": {
+    "name": "Copper Convective Heat Sink Block",
+    "description": "3D copper block (k = 401 W/(m*K)) with internal Joule heating (Q = 1500 W/m^3), Dirichlet heating on X_MIN (373.15 K), convective cooling on X_MAX (h = 25 W/(m^2*K), T_inf = 293.15 K), and inward heat flux on Y_MAX (-500 W/m^2).",
+    "author": "PDE Simulation Studio Examples",
+    "created_at": "2026-10-25T21:00:00Z",
+    "updated_at": "2026-10-25T21:00:00Z"
+  },
+  "units": {
+    "length": "m",
+    "temperature": "K",
+    "thermal_conductivity": "W/(m*K)",
+    "heat_source": "W/m^3",
+    "heat_flux": "W/m^2",
+    "convection_coefficient": "W/(m^2*K)"
+  },
+  "geometry": {
+    "type": "rectangular_cuboid",
+    "dimensions": {
+      "length_x": 1.2,
+      "length_y": 0.7,
+      "length_z": 0.5
+    },
+    "position": { "x": 0.0, "y": 0.0, "z": 0.0 },
+    "rotation_deg": { "x": 0.0, "y": 0.0, "z": 0.0 }
+  },
+  "material": {
+    "id": "mat_copper",
+    "name": "Copper (C11000)",
+    "preset": "copper",
+    "thermal_conductivity": 401.0
+  },
+  "physics": {
+    "type": "steady_state_heat_conduction",
+    "volumetric_heat_source": 1500.0
+  },
+  "boundary_conditions": {
+    "X_MIN": {
+      "face_id": "X_MIN",
+      "type": "dirichlet",
+      "temperature": 373.15,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    },
+    "X_MAX": {
+      "face_id": "X_MAX",
+      "type": "robin",
+      "temperature": null,
+      "heat_flux": null,
+      "convection_coefficient": 25.0,
+      "ambient_temperature": 293.15
+    },
+    "Y_MIN": {
+      "face_id": "Y_MIN",
+      "type": "insulated",
+      "temperature": null,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    },
+    "Y_MAX": {
+      "face_id": "Y_MAX",
+      "type": "neumann",
+      "temperature": null,
+      "heat_flux": -500.0,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    },
+    "Z_MIN": {
+      "face_id": "Z_MIN",
+      "type": "insulated",
+      "temperature": null,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    },
+    "Z_MAX": {
+      "face_id": "Z_MAX",
+      "type": "insulated",
+      "temperature": null,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    }
+  },
+  "mesh": {
+    "element_type": "tetrahedral_4node",
+    "divisions": { "nx": 8, "ny": 5, "nz": 4 },
+    "max_element_size": 0.2,
+    "polynomial_order": 1
+  }
+}

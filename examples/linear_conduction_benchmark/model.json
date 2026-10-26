@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0.0",
+  "metadata": {
+    "name": "Analytical 1D Linear Conduction Benchmark",
+    "description": "1.0 m x 0.4 m x 0.4 m isotropic conductor (k = 100 W/(m*K), Q = 0) with X_MIN at 400 K, X_MAX at 300 K, and all lateral faces insulated.",
+    "author": "PDE Simulation Studio Benchmark Suite",
+    "created_at": "2026-10-25T21:00:00Z",
+    "updated_at": "2026-10-25T21:00:00Z"
+  },
+  "units": {
+    "length": "m",
+    "temperature": "K",
+    "thermal_conductivity": "W/(m*K)",
+    "heat_source": "W/m^3",
+    "heat_flux": "W/m^2",
+    "convection_coefficient": "W/(m^2*K)"
+  },
+  "geometry": {
+    "type": "rectangular_cuboid",
+    "dimensions": {
+      "length_x": 1.0,
+      "length_y": 0.4,
+      "length_z": 0.4
+    },
+    "position": { "x": 0.0, "y": 0.0, "z": 0.0 },
+    "rotation_deg": { "x": 0.0, "y": 0.0, "z": 0.0 }
+  },
+  "material": {
+    "id": "mat_benchmark_100",
+    "name": "Reference Conductor (k=100)",
+    "preset": "custom",
+    "thermal_conductivity": 100.0
+  },
+  "physics": {
+    "type": "steady_state_heat_conduction",
+    "volumetric_heat_source": 0.0
+  },
+  "boundary_conditions": {
+    "X_MIN": {
+      "face_id": "X_MIN",
+      "type": "dirichlet",
+      "temperature": 400.0,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    },
+    "X_MAX": {
+      "face_id": "X_MAX",
+      "type": "dirichlet",
+      "temperature": 300.0,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    },
+    "Y_MIN": {
+      "face_id": "Y_MIN",
+      "type": "insulated",
+      "temperature": null,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    },
+    "Y_MAX": {
+      "face_id": "Y_MAX",
+      "type": "insulated",
+      "temperature": null,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    },
+    "Z_MIN": {
+      "face_id": "Z_MIN",
+      "type": "insulated",
+      "temperature": null,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    },
+    "Z_MAX": {
+      "face_id": "Z_MAX",
+      "type": "insulated",
+      "temperature": null,
+      "heat_flux": null,
+      "convection_coefficient": null,
+      "ambient_temperature": null
+    }
+  },
+  "mesh": {
+    "element_type": "tetrahedral_4node",
+    "divisions": { "nx": 8, "ny": 4, "nz": 4 },
+    "max_element_size": 0.2,
+    "polynomial_order": 1
+  }
+}

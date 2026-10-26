@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pdestudio.engineering/schemas/pde-model-v1.schema.json",
+  "title": "PDE Simulation Studio Canonical Model Schema v1.0.0",
+  "description": "Versioned canonical JSON schema for 3D parametric geometry, steady-state heat conduction physics, semantic face boundary conditions, and structured mesh configuration.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "metadata",
+    "units",
+    "geometry",
+    "material",
+    "physics",
+    "boundary_conditions",
+    "mesh"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0",
+      "description": "Semantic version of the canonical simulation model schema."
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["name", "description"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "author": { "type": "string", "maxLength": 120 },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      }
+    },
+    "units": {
+      "type": "object",
+      "required": [
+        "length",
+        "temperature",
+        "thermal_conductivity",
+        "heat_source",
+        "heat_flux",
+        "convection_coefficient"
+      ],
+      "properties": {
+        "length": { "type": "string", "enum": ["m", "cm", "mm"] },
+        "temperature": { "type": "string", "enum": ["K", "C"] },
+        "thermal_conductivity": { "type": "string", "const": "W/(m*K)" },
+        "heat_source": { "type": "string", "const": "W/m^3" },
+        "heat_flux": { "type": "string", "const": "W/m^2" },
+        "convection_coefficient": { "type": "string", "const": "W/(m^2*K)" }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "required": ["type", "dimensions", "position", "rotation_deg"],
+      "properties": {
+        "type": { "type": "string", "const": "rectangular_cuboid" },
+        "dimensions": {
+          "type": "object",
+          "required": ["length_x", "length_y", "length_z"],
+          "properties": {
+            "length_x": { "type": "number", "exclusiveMinimum": 0 },
+            "length_y": { "type": "number", "exclusiveMinimum": 0 },
+            "length_z": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        },
+        "position": {
+          "type": "object",
+          "required": ["x", "y", "z"],
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" },
+            "z": { "type": "number" }
+          }
+        },
+        "rotation_deg": {
+          "type": "object",
+          "required": ["x", "y", "z"],
+          "properties": {
+            "x": { "type": "number", "minimum": -360, "maximum": 360 },
+            "y": { "type": "number", "minimum": -360, "maximum": 360 },
+            "z": { "type": "number", "minimum": -360, "maximum": 360 }
+          }
+        }
+      }
+    },
+    "material": {
+      "type": "object",
+      "required": ["id", "name", "preset", "thermal_conductivity"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "preset": {
+          "type": "string",
+          "enum": ["copper", "aluminum_6061", "steel_304", "silicon", "titanium", "custom"]
+        },
+        "thermal_conductivity": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "physics": {
+      "type": "object",
+      "required": ["type", "volumetric_heat_source"],
+      "properties": {
+        "type": { "type": "string", "const": "steady_state_heat_conduction" },
+        "volumetric_heat_source": { "type": "number" }
+      }
+    },
+    "boundary_conditions": {
+      "type": "object",
+      "required": ["X_MIN", "X_MAX", "Y_MIN", "Y_MAX", "Z_MIN", "Z_MAX"],
+      "properties": {
+        "X_MIN": { "$ref": "#/$defs/faceBoundaryCondition" },
+        "X_MAX": { "$ref": "#/$defs/faceBoundaryCondition" },
+        "Y_MIN": { "$ref": "#/$defs/faceBoundaryCondition" },
+        "Y_MAX": { "$ref": "#/$defs/faceBoundaryCondition" },
+        "Z_MIN": { "$ref": "#/$defs/faceBoundaryCondition" },
+        "Z_MAX": { "$ref": "#/$defs/faceBoundaryCondition" }
+      },
+      "additionalProperties": false
+    },
+    "mesh": {
+      "type": "object",
+      "required": ["element_type", "divisions"],
+      "properties": {
+        "element_type": {
+          "type": "string",
+          "enum": ["hexahedral_8node", "tetrahedral_4node"]
+        },
+        "divisions": {
+          "type": "object",
+          "required": ["nx", "ny", "nz"],
+          "properties": {
+            "nx": { "type": "integer", "minimum": 1, "maximum": 200 },
+            "ny": { "type": "integer", "minimum": 1, "maximum": 200 },
+            "nz": { "type": "integer", "minimum": 1, "maximum": 200 }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "faceBoundaryCondition": {
+      "type": "object",
+      "required": ["face_id", "type"],
+      "properties": {
+        "face_id": {
+          "type": "string",
+          "enum": ["X_MIN", "X_MAX", "Y_MIN", "Y_MAX", "Z_MIN", "Z_MAX"]
+        },
+        "type": {
+          "type": "string",
+          "enum": ["dirichlet", "neumann", "robin", "insulated"]
+        },
+        "temperature": { "type": ["number", "null"] },
+        "heat_flux": { "type": ["number", "null"] },
+        "convection_coefficient": { "type": ["number", "null"] },
+        "ambient_temperature": { "type": ["number", "null"] }
+      }
+    }
+  }
+}

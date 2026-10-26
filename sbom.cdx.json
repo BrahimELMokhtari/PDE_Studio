@@ -1,0 +1,178 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "serialNumber": "urn:uuid:30c14394-625f-4bb7-966d-d222d8eaf376",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-10-25T23:45:00Z",
+    "tools": [
+      {
+        "vendor": "PDE Simulation Studio",
+        "name": "cyclonedx-sbom-generator",
+        "version": "3.0.0"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "pde-simulation-studio",
+      "version": "3.0.0",
+      "description": "Commercial 3D CAD/CAE Pre-Processor, NGSolve OpenCASCADE Tetrahedral FEM Solver, and Scientific Post-Processing Platform"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "fastapi",
+      "version": "0.135.3",
+      "purl": "pkg:pypi/fastapi@0.135.3",
+      "licenses": [{ "license": { "id": "MIT" } }]
+    },
+    {
+      "type": "library",
+      "name": "starlette",
+      "version": "1.0.0",
+      "purl": "pkg:pypi/starlette@1.0.0",
+      "licenses": [{ "license": { "id": "BSD-3-Clause" } }]
+    },
+    {
+      "type": "library",
+      "name": "uvicorn",
+      "version": "0.44.0",
+      "purl": "pkg:pypi/uvicorn@0.44.0",
+      "licenses": [{ "license": { "id": "BSD-3-Clause" } }]
+    },
+    {
+      "type": "library",
+      "name": "pydantic",
+      "version": "2.13.0",
+      "purl": "pkg:pypi/pydantic@2.13.0",
+      "licenses": [{ "license": { "id": "MIT" } }]
+    },
+    {
+      "type": "library",
+      "name": "python-dotenv",
+      "version": "1.2.2",
+      "purl": "pkg:pypi/python-dotenv@1.2.2",
+      "licenses": [{ "license": { "id": "BSD-3-Clause" } }]
+    },
+    {
+      "type": "library",
+      "name": "ngsolve",
+      "version": "6.2.2608",
+      "purl": "pkg:pypi/ngsolve@6.2.2608",
+      "licenses": [{ "license": { "id": "LGPL-2.1-only" } }]
+    },
+    {
+      "type": "library",
+      "name": "netgen-mesher",
+      "version": "6.2.2608",
+      "purl": "pkg:pypi/netgen-mesher@6.2.2608",
+      "licenses": [{ "license": { "id": "LGPL-2.1-only" } }]
+    },
+    {
+      "type": "library",
+      "name": "netgen-occt",
+      "version": "7.8.1",
+      "purl": "pkg:pypi/netgen-occt@7.8.1",
+      "licenses": [{ "license": { "id": "LGPL-2.1-only" } }]
+    },
+    {
+      "type": "library",
+      "name": "numpy",
+      "version": "2.5.4",
+      "purl": "pkg:pypi/numpy@2.5.4",
+      "licenses": [{ "license": { "id": "BSD-3-Clause" } }]
+    },
+    {
+      "type": "library",
+      "name": "scipy",
+      "version": "1.18.1",
+      "purl": "pkg:pypi/scipy@1.18.1",
+      "licenses": [{ "license": { "id": "BSD-3-Clause" } }]
+    },
+    {
+      "type": "library",
+      "name": "redis",
+      "version": "8.1.0",
+      "purl": "pkg:pypi/redis@8.1.0",
+      "licenses": [{ "license": { "id": "MIT" } }]
+    },
+    {
+      "type": "library",
+      "name": "rq",
+      "version": "2.12.0",
+      "purl": "pkg:pypi/rq@2.12.0",
+      "licenses": [{ "license": { "id": "BSD-2-Clause" } }]
+    },
+    {
+      "type": "library",
+      "name": "fakeredis",
+      "version": "2.40.0",
+      "purl": "pkg:pypi/fakeredis@2.40.0",
+      "licenses": [{ "license": { "id": "BSD-3-Clause" } }]
+    },
+    {
+      "type": "library",
+      "name": "PyJWT",
+      "version": "2.15.1",
+      "purl": "pkg:pypi/pyjwt@2.15.1",
+      "licenses": [{ "license": { "id": "MIT" } }]
+    },
+    {
+      "type": "library",
+      "name": "boto3",
+      "version": "1.43.118",
+      "purl": "pkg:pypi/boto3@1.43.118",
+      "licenses": [{ "license": { "id": "Apache-2.0" } }]
+    },
+    {
+      "type": "library",
+      "name": "psycopg",
+      "version": "3.3.6",
+      "purl": "pkg:pypi/psycopg@3.3.6",
+      "licenses": [{ "license": { "id": "MPL-2.0" } }]
+    },
+    {
+      "type": "library",
+      "name": "psycopg-binary",
+      "version": "3.3.6",
+      "purl": "pkg:pypi/psycopg-binary@3.3.6",
+      "licenses": [{ "license": { "id": "MPL-2.0" } }]
+    },
+    {
+      "type": "library",
+      "name": "react",
+      "version": "18.3.1",
+      "purl": "pkg:npm/react@18.3.1",
+      "licenses": [{ "license": { "id": "MIT" } }]
+    },
+    {
+      "type": "library",
+      "name": "react-dom",
+      "version": "18.3.1",
+      "purl": "pkg:npm/react-dom@18.3.1",
+      "licenses": [{ "license": { "id": "MIT" } }]
+    },
+    {
+      "type": "library",
+      "name": "three",
+      "version": "0.164.1",
+      "purl": "pkg:npm/three@0.164.1",
+      "licenses": [{ "license": { "id": "MIT" } }]
+    },
+    {
+      "type": "library",
+      "name": "typescript",
+      "version": "5.4.5",
+      "purl": "pkg:npm/typescript@5.4.5",
+      "licenses": [{ "license": { "id": "Apache-2.0" } }]
+    },
+    {
+      "type": "library",
+      "name": "vite",
+      "version": "5.2.11",
+      "purl": "pkg:npm/vite@5.2.11",
+      "licenses": [{ "license": { "id": "MIT" } }]
+    }
+  ]
+}

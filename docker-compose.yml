@@ -1,0 +1,86 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pde-studio-postgres
+    environment:
+      - POSTGRES_DB=pde_simulation_studio
+      - POSTGRES_USER=pde_user
+      - POSTGRES_PASSWORD=pde_dev_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pde_user -d pde_simulation_studio"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: pde-studio-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pde-studio-api
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=PDE Simulation Studio API
+      - APP_ENV=development
+      - AUTH_REQUIRED=false
+      - CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+      - DATABASE_URL=postgresql://pde_user:pde_dev_password@postgres:5432/pde_simulation_studio
+      - STORAGE_BACKEND=local
+      - LOCAL_STORAGE_PATH=/app/data/artifacts
+      - REDIS_URL=redis://redis:6379/0
+      - RQ_QUEUE_NAME=pde_simulations
+      - JOB_TIMEOUT_SECONDS=180
+      - MAX_MESH_ELEMENTS=250000
+    volumes:
+      - pde_artifacts_data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    container_name: pde-studio-rq-worker
+    environment:
+      - APP_ENV=development
+      - DATABASE_URL=postgresql://pde_user:pde_dev_password@postgres:5432/pde_simulation_studio
+      - STORAGE_BACKEND=local
+      - LOCAL_STORAGE_PATH=/app/data/artifacts
+      - REDIS_URL=redis://redis:6379/0
+      - RQ_QUEUE_NAME=pde_simulations
+      - JOB_TIMEOUT_SECONDS=180
+      - MAX_MESH_ELEMENTS=250000
+    volumes:
+      - pde_artifacts_data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
+  pde_artifacts_data:
